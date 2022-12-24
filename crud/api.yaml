@@ -1,0 +1,117 @@
+swagger: "2.0"
+info:
+  title: Basic crud using Mysql
+  description: This is my company API Documentation
+  version: 1.0
+  contact:
+    email: shashank.s@syntizen.com
+  liscence:
+    name: Apache 2.0
+    url: "http://www.apache.org/liscences/LIS"
+  servers:
+    -url: http://localhost:4001
+    description: THis is my local Server
+    -url: http://example.com/
+    description: This is my original URL
+schemes: [http,https]
+
+#Return Users From get request
+paths:
+
+
+  #Returns a User
+  /users:
+    get:
+      summary: Returns a list of users.
+      description: People Who are already registered
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: object
+            properties:
+              name:
+                type: string
+              age:
+                type: integer
+
+
+  /users/create:
+    post:
+      summary: Adds a new user
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#components/schemas/User'
+      responses:
+        '200':
+          description: OK
+
+#update json/body & Body required
+  /users/edit/{id}:
+    put:
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+        - in: body
+          name: body  
+          description: user that needed to be updated
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      requestBody:
+        description: Update an existent user in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+
+# Delete user 
+  /users/delete/{id}:
+    delete:
+        summary: Delete user
+        description: This can only be done by the logged in user.
+        operationId: deleteUser
+        parameters:
+          - name: id
+            in: path
+            description: The name that needs to be deleted
+            required: true
+            schema:
+              type: string
+        responses:
+          '400':
+            description: Invalid username supplied
+          '404':
+            description: User not found
+
+
+
+
+
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+        - age
+      properties:
+        name:
+          type: string
+        age:
+          type: integer

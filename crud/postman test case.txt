@@ -1,0 +1,42 @@
+pm.test("Response is ok", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("response time is less than 200", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200)
+});
+
+pm.test("environment variable_key", function () {
+    pm.environment.get("variable_key")
+});
+
+pm.test("Global environment variable_key", function () {
+   pm.globals.get("variable_key")
+});
+
+
+
+
+pm.test("Content-Type is present", function () {
+    pm.response.to.have.header("Content-Type")
+});
+
+pm.test("Status code name has string", function () {
+    pm.response.to.have.status("OK")
+});
+
+pm.test("response should be okay to process", function () {
+    pm.response.to.not.be.error;
+    pm.response.to.have.jsonBody("");
+    pm.response.to.not.have.jsonBody("error");
+});
+
+pm.test("response must be valid and have a body", function () {
+     pm.response.to.be.ok;
+     pm.response.to.be.withBody;
+     pm.response.to.be.json;
+});
+
+
+
+
